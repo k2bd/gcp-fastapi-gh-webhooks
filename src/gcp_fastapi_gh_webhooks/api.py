@@ -1,13 +1,14 @@
 import logging
 
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from gcp_fastapi_gh_webhooks.dependencies import auth_with_secret
 
-from gcp_fastapi_poetry.types import ExampleResponse
+from gcp_fastapi_gh_webhooks.types import ExampleResponse
 
 logger = logging.getLogger(__name__)
 
-app = FastAPI()
+app = FastAPI(dependencies=[Depends(auth_with_secret)])
 
 app.add_middleware(
     CORSMiddleware,
